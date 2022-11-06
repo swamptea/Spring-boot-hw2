@@ -1,10 +1,13 @@
-package ru.swamptea.homework2;
+package ru.swamptea.homework2.repository;
+
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class UserRepository {
 
     Map<Map<String, String>, List<Authorities>> users = new HashMap<>();

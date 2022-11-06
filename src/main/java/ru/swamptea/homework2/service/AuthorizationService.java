@@ -1,14 +1,18 @@
 package ru.swamptea.homework2.service;
 
-import ru.swamptea.homework2.Authorities;
-import ru.swamptea.homework2.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.swamptea.homework2.repository.Authorities;
+import ru.swamptea.homework2.repository.UserRepository;
 import ru.swamptea.homework2.exception.InvalidCredentials;
 import ru.swamptea.homework2.exception.UnauthorizedUser;
 
 import java.util.List;
 
+@Component
 public class AuthorizationService {
-    UserRepository userRepository = new UserRepository();
+    @Autowired
+    UserRepository userRepository;
 
     public List<Authorities> getAuthorities(String user, String password) {
         if (isEmpty(user) || isEmpty(password)) {
