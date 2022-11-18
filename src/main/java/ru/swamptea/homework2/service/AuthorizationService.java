@@ -1,26 +1,31 @@
 package ru.swamptea.homework2.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.swamptea.homework2.repository.Authorities;
-import ru.swamptea.homework2.repository.UserRepository;
 import ru.swamptea.homework2.exception.InvalidCredentials;
 import ru.swamptea.homework2.exception.UnauthorizedUser;
+import ru.swamptea.homework2.repository.Authorities;
+import ru.swamptea.homework2.repository.UserRepository;
+import ru.swamptea.homework2.user.User;
 
 import java.util.List;
 
 @Component
 public class AuthorizationService {
-    @Autowired
+
+    final
     UserRepository userRepository;
 
-    public List<Authorities> getAuthorities(String user, String password) {
-        if (isEmpty(user) || isEmpty(password)) {
+    public AuthorizationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<Authorities> getAuthorities(User user) {
+        if (isEmpty(user.getLogin()) || isEmpty(user.getPassword())) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user.getLogin(), user.getPassword());
         if (isEmpty(userAuthorities)) {
-            throw new UnauthorizedUser("Unknown user " + user);
+            throw new UnauthorizedUser("Unknown user " + user.getLogin());
         }
         return userAuthorities;
     }

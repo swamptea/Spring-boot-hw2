@@ -1,0 +1,14 @@
+ server {
+                listen 80;
+                server_name localhost;
+
+                location / {
+                        proxy_pass http://myserver;
+                 }
+
+                location /signin {
+                        alias /home/alexandra/IdeaProjects/homework2/src/main/resources/form.html;
+                 }
+
+        }
+
